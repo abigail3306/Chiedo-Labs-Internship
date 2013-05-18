@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 <head>
   <title><?php wp_title( '|', true, 'right' ); bloginfo( 'name' ); ?></title>
@@ -15,5 +15,7 @@
 <!--[if IE 9]><div class="ie9"><![endif]-->
 <!--[if IE 10]><div class="ie10"><![endif]-->
 <header>
+<nav class="mainmenu">
   <?php wp_nav_menu( array( 'theme_location' => 'header-menu' ) ); ?>
+</nav>
 </header>
