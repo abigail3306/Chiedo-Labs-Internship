@@ -100,6 +100,7 @@ function themename_displayroles() {
 
 /*
 IMAGE UPLOAD
+credits to  - http://www.krishnakantsharma.com/2012/01/image-uploads-on-wordpress-admin-screens-using-jquery-and-new-plupload/
 */
 add_action( 'admin_enqueue_scripts', 'plu_admin_enqueue' );
 function plu_admin_enqueue() {
