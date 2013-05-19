@@ -46,13 +46,31 @@ function register_themename_settings() {
   register_setting( 'themename-settings-group', 'themename_option_1' );
   register_setting( 'themename-settings-group', 'themename_option_2' );
   register_setting( 'themename-settings-group', 'themename_option_3' );
-  //all options can be retrieved with this: get_option('home_page_post_title');
+  register_setting( 'themename-settings-group', 'themename_logo_url' ); // this is for the logo
 }
 
 function themename_settings_page() {
   ?>
     <div class="wrap">
     <h2>Theme Settings</h2>
+
+      <!-- Image upload -->
+      <?php $id = "themename_logo"; $multiple = false; $width = null; $height = null; ?>
+      <label>Theme Logo</label>
+      <input type="hidden" name="<?php echo $id; ?>" id="<?php echo $id; ?>" />
+      <div class="plupload-upload-uic hide-if-no-js <?php if ($multiple): ?>plupload-upload-uic-multiple<?php endif; ?>" id="<?php echo $id; ?>plupload-upload-ui">
+          <input id="<?php echo $id; ?>plupload-browse-button" type="button" value="<?php esc_attr_e('Upload New logo'); ?>" class="button" />
+          <span class="ajaxnonceplu" id="ajaxnonceplu<?php echo wp_create_nonce($id . 'pluploadan'); ?>"></span>
+          <?php if ($width && $height): ?>
+                  <span class="plupload-resize"></span><span class="plupload-width" id="plupload-width<?php echo $width; ?>"></span>
+                  <span class="plupload-height" id="plupload-height<?php echo $height; ?>"></span>
+          <?php endif; ?>
+          <div class="filelist"></div>
+      </div>
+      <div class="plupload-thumbs <?php if ($multiple): ?>plupload-thumbs-multiple<?php endif; ?>" id="<?php echo $id; ?>plupload-thumbs">
+      </div>
+      <div class="clear"></div>
+      <!-- end image upload -->
       <form method="post" action="options.php">
         <?php settings_fields( 'themename-settings-group' ); ?>
           <div>
@@ -80,4 +98,62 @@ function themename_displayroles() {
   echo "</pre>";
 }
 
+/*
+IMAGE UPLOAD
+*/
+add_action( 'admin_enqueue_scripts', 'plu_admin_enqueue' );
+function plu_admin_enqueue() {
+    if(!is_admin()) return;
+    wp_enqueue_script('plupload-all');
+ 
+    wp_register_script('myplupload', get_template_directory_uri().'/myplupload/myplupload.js', array('jquery'));
+    wp_enqueue_script('myplupload');
+}
+
+add_action("admin_head", "plupload_admin_head");
+function plupload_admin_head() {
+    $plupload_init = array(
+        'runtimes' => 'html5,silverlight,flash,html4',
+        'browse_button' => 'plupload-browse-button', // will be adjusted per uploader
+        'container' => 'plupload-upload-ui', // will be adjusted per uploader
+        'drop_element' => 'drag-drop-area', // will be adjusted per uploader
+        'file_data_name' => 'async-upload', // will be adjusted per uploader
+        'multiple_queues' => true,
+        'max_file_size' => wp_max_upload_size() . 'b',
+        'url' => admin_url('admin-ajax.php'),
+        'flash_swf_url' => includes_url('js/plupload/plupload.flash.swf'),
+        'silverlight_xap_url' => includes_url('js/plupload/plupload.silverlight.xap'),
+        'filters' => array(array('title' => __('Allowed Files'), 'extensions' => '*')),
+        'multipart' => true,
+        'urlstream_upload' => true,
+        'multi_selection' => false, // will be added per uploader
+         // additional post data to send to our ajax hook
+        'multipart_params' => array(
+            '_ajax_nonce' => "", // will be added per uploader
+            'action' => 'plupload_action', // the ajax action name
+            'imgid' => 0 // will be added per uploader
+        )
+    );
+?>
+<script type="text/javascript">
+    var base_plupload_config=<?php echo json_encode($plupload_init); ?>;
+</script>
+<?php
+}
+
+add_action('wp_ajax_plupload_action', "g_plupload_action");
+function g_plupload_action() {
+ 
+    // check ajax noonce
+    $imgid = $_POST["imgid"];
+    check_ajax_referer($imgid . 'pluploadan');
+ 
+    // handle file upload
+    $status = wp_handle_upload($_FILES[$imgid . 'async-upload'], array('test_form' => true, 'action' => 'plupload_action'));
+ 
+    // send the uploaded file url in response
+    update_option("themename_logo_url", $status['url']);
+    echo $status['url'];
+    exit;
+}
 ?>
