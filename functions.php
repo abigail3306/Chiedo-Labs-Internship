@@ -49,12 +49,12 @@ function register_themename_settings() {
   register_setting( 'themename-settings-group', 'themename_logo_url' ); // this is for the logo
 }
 
-function themename_settings_page() {
-  ?>
-    <div class="wrap">
-    <h2>Theme Settings</h2>
-
-      <!-- Image upload -->
+/*
+Display the plupload form
+*/
+function plupload_display_form() {
+?>
+<div class="plupload-form-style">
       <?php $id = "themename_logo"; $multiple = false; $width = null; $height = null; ?>
       <label>Theme Logo</label>
       <input type="hidden" name="<?php echo $id; ?>" id="<?php echo $id; ?>" />
@@ -70,7 +70,25 @@ function themename_settings_page() {
       <div class="plupload-thumbs <?php if ($multiple): ?>plupload-thumbs-multiple<?php endif; ?>" id="<?php echo $id; ?>plupload-thumbs">
       </div>
       <div class="clear"></div>
-      <!-- end image upload -->
+</div>
+<?
+}
+
+/*
+The theme settings page
+*/
+function themename_settings_page() {
+  ?>
+    <style>
+      #ark_logoplupload-thumbs img { max-width: 400px; }
+      label { width: 200px; float: left; display: block; }
+      form div, .plupload-form-style div { margin-bottom: 10px; }
+    </style>
+    <?php plupload_display_form(); ?>
+
+    <div class="wrap">
+    <h2>Theme Settings</h2>
+
       <form method="post" action="options.php">
         <?php settings_fields( 'themename-settings-group' ); ?>
           <div>
