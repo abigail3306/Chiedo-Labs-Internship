@@ -175,4 +175,15 @@ function remove_dashboard_widgets() {
   unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']);
 
 }
+
+/**
+ * Rename admin menus
+ */
+add_filter( 'gettext', 'rename_admin_menus' );
+add_filter( 'ngettext', 'rename_admin_menus' );
+function rename_admin_menus( $translated ) {  
+    $translated = str_replace( 'Settings', 'WP Settings', $translated );
+    return $translated;
+}
+
 ?>
