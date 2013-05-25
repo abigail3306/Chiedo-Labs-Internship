@@ -185,5 +185,35 @@ function rename_admin_menus( $translated ) {
     $translated = str_replace( 'Settings', 'WP Settings', $translated );
     return $translated;
 }
+/*
+Remove admin menu pages and redesignate them
+*/
+add_action( 'admin_menu', 'ark_update_menu_pages' );
+function ark_update_menu_pages() {
+  remove_menu_page('link-manager.php');
+  remove_menu_page('edit-comments.php');	
+  remove_menu_page('plugins.php');	
+  remove_menu_page('themes.php');	
+  remove_menu_page('users.php');	
+  remove_menu_page('tools.php');	
+  
+  add_submenu_page('options-general.php','Plugins', 'Plugins', 'administrator', 'plugins.php');
+  add_submenu_page('options-general.php','Themes', 'Themes', 'administrator', 'themes.php');
+  add_submenu_page('options-general.php','Tools', 'Tools', 'administrator', 'tools.php');
+  add_submenu_page('options-general.php','Users', 'Users', 'administrator', 'users.php');
+
+  add_menu_page('Menus','Menus','administrator','nav-menus.php');
+
+}
+
+/*
+Remove admin pages from wordpress admin bar
+*/
+add_action( 'wp_before_admin_bar_render', 'admin_bar_render' );
+function admin_bar_render() {
+  global $wp_admin_bar;
+  $wp_admin_bar->remove_menu('comments');
+  $wp_admin_bar->remove_menu('new-content');
+}
 
 ?>
