@@ -1,5 +1,14 @@
 <?php
 /*
+  Adds widgetable areas
+  can be called it theme with dynamic_sidebar( 'name here' );
+  see http://codex.wordpress.org/Widgetizing_Themes for dynamic info
+*/
+if ( function_exists('register_sidebar') ) register_sidebar(array(
+  'name' => "Sidebar name"
+));
+
+/*
   Register wordpress menu so that the custom menu can be used
 */
 add_action( 'init', 'themename_register_my_menus' );
@@ -66,7 +75,7 @@ Display the plupload form
 function plupload_display_form() {
 ?>
 <div class="plupload-form-style">
-      <?php $id = "themename_logo"; $multiple = false; $width = null; $height = null; ?>
+      <?php $id = "themename-img-1"; $multiple = false; $width = null; $height = null; ?>
       <label>Theme Logo</label>
       <input type="hidden" name="<?php echo $id; ?>" id="<?php echo $id; ?>" />
       <div class="plupload-upload-uic hide-if-no-js <?php if ($multiple): ?>plupload-upload-uic-multiple<?php endif; ?>" id="<?php echo $id; ?>plupload-upload-ui">
@@ -91,7 +100,7 @@ The theme settings page
 function themename_settings_page() {
   ?>
     <style>
-      #ark_logoplupload-thumbs img { max-width: 400px; }
+      .plupload-form-style img { max-width: 400px; }
       label { width: 200px; float: left; display: block; }
       form div, .plupload-form-style div { margin-bottom: 10px; }
     </style>
@@ -244,6 +253,26 @@ function themename_clean_admin_bar() {
   global $wp_admin_bar;
   $wp_admin_bar->remove_menu('comments');
   $wp_admin_bar->remove_menu('new-content');
+}
+
+/**
+ * Remove default wordpress widgets except text
+ */
+add_action('widgets_init', 'themename_unregister_default_wp_widgets', 1);
+function themename_unregister_default_wp_widgets() {
+  unregister_widget('WP_Widget_Pages');
+  unregister_widget('WP_Widget_Calendar');
+  unregister_widget('WP_Widget_Archives');
+  unregister_widget('WP_Widget_Links');
+  unregister_widget('WP_Widget_Meta');
+  unregister_widget('WP_Widget_Search');
+  unregister_widget('WP_Widget_Text');
+  unregister_widget('WP_Nav_Menu_Widget');
+  unregister_widget('WP_Widget_Categories');
+  unregister_widget('WP_Widget_Recent_Posts');
+  unregister_widget('WP_Widget_Recent_Comments');
+  unregister_widget('WP_Widget_RSS');
+  unregister_widget('WP_Widget_Tag_Cloud');
 }
 
 ?>
