@@ -9,6 +9,7 @@ jQuery(document).ready(function($) {
             var $this=$(this);
             var id1=$this.attr("id");
             var imgId=id1.replace("plupload-upload-ui", "");
+            var optionname=$(this).find('.optionname').first().attr('id');
  
             plu_show_thumbs(imgId);
  
@@ -19,6 +20,7 @@ jQuery(document).ready(function($) {
             pconfig["drop_element"] = imgId + pconfig["drop_element"];
             pconfig["file_data_name"] = imgId + pconfig["file_data_name"];
             pconfig["multipart_params"]["imgid"] = imgId;
+            pconfig["multipart_params"]["optionname"] = optionname;
             pconfig["multipart_params"]["_ajax_nonce"] = $this.find(".ajaxnonceplu").attr("id").replace("ajaxnonceplu", "");
  
             if($this.hasClass("plupload-upload-uic-multiple")) {
@@ -69,22 +71,9 @@ jQuery(document).ready(function($) {
  
                 $('#' + file.id).fadeOut();
                 response=response["response"]
-                // add url to the hidden field
-                if($this.hasClass("plupload-upload-uic-multiple")) {
-                    // multiple
-                    var v1=$.trim($("#" + imgId).val());
-                    if(v1) {
-                        v1 = v1 + "," + response;
-                    }
-                    else {
-                        v1 = response;
-                    }
-                    $("#" + imgId).val(v1);
-                }
-                else {
-                    // single
-                    $("#" + imgId).val(response + "");
-                }
+
+                // single
+                $("#" + imgId).val(response + "");
  
                 // show thumbs 
                 plu_show_thumbs(imgId);
@@ -99,13 +88,13 @@ jQuery(document).ready(function($) {
 function plu_show_thumbs(imgId) {
     var $=jQuery;
     var thumbsC=$("#" + imgId + "plupload-thumbs");
-    thumbsC.html("");
     // get urls
     var imagesS=$("#"+imgId).val();
     var images=imagesS.split(",");
+    if(images[0] !== "") thumbsC.html("");
     for(var i=0; i<images.length; i++) {
         if(images[i]) {
-            var thumb=$('<div class="thumb" id="thumb' + imgId +  i + '"><img src="' + images[i] + '" alt="" /><div class="thumbi"><a id="thumbremovelink' + imgId + i + '" href="#">Remove</a></div> <div class="clear"></div></div>');
+            var thumb=$('<div class="thumb" id="thumb' + imgId +  i + '"><img src="' + images[i] + '" alt="" /><div class="clear"></div></div>');
             thumbsC.append(thumb);
             thumb.find("a").click(function() {
                 var ki=$(this).attr("id").replace("thumbremovelink" + imgId , "");

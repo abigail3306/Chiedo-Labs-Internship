@@ -66,74 +66,6 @@ function themename_register_settings() {
   register_setting( 'themename-settings-group', 'themename_option_1' );
   register_setting( 'themename-settings-group', 'themename_option_2' );
   register_setting( 'themename-settings-group', 'themename_option_3' );
-  register_setting( 'themename-settings-group', 'themename_logo_url' ); // this is for the logo
-}
-
-/*
-Display the plupload form
-*/
-function plupload_display_form() {
-?>
-<div class="plupload-form-style">
-      <?php $id = "themename-img-1"; $multiple = false; $width = null; $height = null; ?>
-      <label>Theme Logo</label>
-      <input type="hidden" name="<?php echo $id; ?>" id="<?php echo $id; ?>" />
-      <div class="plupload-upload-uic hide-if-no-js <?php if ($multiple): ?>plupload-upload-uic-multiple<?php endif; ?>" id="<?php echo $id; ?>plupload-upload-ui">
-          <input id="<?php echo $id; ?>plupload-browse-button" type="button" value="<?php esc_attr_e('Upload New logo'); ?>" class="button" />
-          <span class="ajaxnonceplu" id="ajaxnonceplu<?php echo wp_create_nonce($id . 'pluploadan'); ?>"></span>
-          <?php if ($width && $height): ?>
-                  <span class="plupload-resize"></span><span class="plupload-width" id="plupload-width<?php echo $width; ?>"></span>
-                  <span class="plupload-height" id="plupload-height<?php echo $height; ?>"></span>
-          <?php endif; ?>
-          <div class="filelist"></div>
-      </div>
-      <div class="plupload-thumbs <?php if ($multiple): ?>plupload-thumbs-multiple<?php endif; ?>" id="<?php echo $id; ?>plupload-thumbs">
-      </div>
-      <div class="clear"></div>
-</div>
-<?
-}
-
-/*
-The theme settings page
-*/
-function themename_settings_page() {
-  ?>
-    <style>
-      .plupload-form-style img { max-width: 400px; }
-      label { width: 200px; float: left; display: block; }
-      form div, .plupload-form-style div { margin-bottom: 10px; }
-    </style>
-    <?php plupload_display_form(); ?>
-
-    <div class="wrap">
-    <h2>Theme Settings</h2>
-
-      <form method="post" action="options.php">
-        <?php settings_fields( 'themename-settings-group' ); ?>
-          <div>
-            Option 1
-            <input type="text" name="themename_option_1" value="<?php echo get_option('themename_option_1'); ?>" />
-          </div>
-          <div>
-            Option 2
-            <input type="text" name="themename_option_2" value="<?php echo get_option('themename_option_2'); ?>" />
-          </div>
-          <div>
-            Option 3
-            <?php wp_editor( get_option('themename_option_3'), 'themename_option_3', $settings = array("textarea_name" => "themename_option_3" ) ); ?>
-          </div>
-          <?php submit_button(); ?>
-      </form>
-    </div>
-  <?php 
-} 
-
-function themename_displayroles() {
-  $wp_roles = new WP_Roles();
-  echo "<pre>";
-  echo var_dump($wp_roles->roles);
-  echo "</pre>";
 }
 
 /*
@@ -170,7 +102,8 @@ function plupload_admin_head() {
         'multipart_params' => array(
             '_ajax_nonce' => "", // will be added per uploader
             'action' => 'plupload_action', // the ajax action name
-            'imgid' => 0 // will be added per uploader
+            'imgid' => 0,
+            'optionname' => 0
         )
     );
 ?>
@@ -185,16 +118,88 @@ function g_plupload_action() {
  
     // check ajax noonce
     $imgid = $_POST["imgid"];
+    $optionname = $_POST["optionname"];
     check_ajax_referer($imgid . 'pluploadan');
  
     // handle file upload
     $status = wp_handle_upload($_FILES[$imgid . 'async-upload'], array('test_form' => true, 'action' => 'plupload_action'));
  
     // send the uploaded file url in response
-    update_option("themename_logo_url", $status['url']);
+    update_option($optionname, $status['url']);
     echo $status['url'];
     exit;
 }
+/*
+Display the plupload form
+*/
+function plupload_add_uploadable_img($id,$optionname,$label,$buttontext) {
+?>
+  <?php register_setting( 'themename-settings-group', $optionname ); ?>
+
+  <div class="plupload-form-style">
+        <label><?php echo $label; ?></label>
+        <input type="hidden" name="<?php echo $id; ?>" id="<?php echo $id; ?>" />
+        <div class="plupload-upload-uic hide-if-no-js" id="<?php echo $id; ?>plupload-upload-ui">
+            <input type="hidden" class="optionname" name="optionname" id="<?php echo $optionname; ?>" />
+            <input id="<?php echo $id; ?>plupload-browse-button" type="button" value="<?php esc_attr_e("$buttontext"); ?>" class="button" />
+            <span class="ajaxnonceplu" id="ajaxnonceplu<?php echo wp_create_nonce($id . 'pluploadan'); ?>"></span>
+        </div>
+        <div class="plupload-thumbs" id="<?php echo $id; ?>plupload-thumbs">
+          <?php if(get_option($optionname)) :?>
+            <img id="<?php echo $id; ?>" src="<?php echo get_option($optionname); ?>" />
+          <?php endif; ?>
+        </div>
+        <div class="clear"></div>
+  </div>
+<?
+}
+
+/*
+The theme settings page
+*/
+function themename_settings_page() {
+  ?>
+    <style>
+      .plupload-form-style img { max-width: 400px; }
+      label { width: 200px; float: left; display: block; font-weight: bold; }
+      form div, .plupload-form-style div { margin-top: 10px; }
+      .textarealabel { float: none; }
+    </style>
+
+    <div class="wrap">
+    <h2>Theme Settings</h2>
+      <?php 
+        plupload_add_uploadable_img("themename_img_1","themename_logo_url","Theme logo","Upload new logo"); 
+        plupload_add_uploadable_img("themename_img_2","themename_logo_url_goop","Random","Upload random"); 
+      ?>
+
+      <form method="post" action="options.php">
+        <?php settings_fields( 'themename-settings-group' ); ?>
+          <div>
+            <label>Option 1</label>
+            <input type="text" name="themename_option_1" value="<?php echo get_option('themename_option_1'); ?>" />
+          </div>
+          <div>
+            <label>Option 2</label>
+            <input type="text" name="themename_option_2" value="<?php echo get_option('themename_option_2'); ?>" />
+          </div>
+          <div>
+            <label class="textarealabel">Option 3</label>
+            <?php wp_editor( get_option('themename_option_3'), 'themename_option_3', $settings = array("textarea_name" => "themename_option_3" ) ); ?>
+          </div>
+          <?php submit_button(); ?>
+      </form>
+    </div>
+  <?php 
+} 
+
+function themename_displayroles() {
+  $wp_roles = new WP_Roles();
+  echo "<pre>";
+  echo var_dump($wp_roles->roles);
+  echo "</pre>";
+}
+
 
 /**
  * Remove default wordpress dashboard wigets except a few
