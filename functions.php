@@ -2,8 +2,8 @@
 /*
   Register wordpress menu so that the custom menu can be used
 */
-add_action( 'init', 'register_my_menus' );
-function register_my_menus() {
+add_action( 'init', 'themename_register_my_menus' );
+function themename_register_my_menus() {
   register_nav_menu('header-menu',__( 'Header menu' ));
   register_nav_menu('footer-menu',__( 'Footer menu' ));
 }
@@ -11,12 +11,16 @@ function register_my_menus() {
 /*
   Load all the scripts in this order.
 */
-add_action('init', 'load_my_scripts');
-function load_my_scripts() {
+add_action('init', 'themename_load_my_scripts');
+function themename_load_my_scripts() {
   if (!is_admin()) {
     wp_deregister_script( 'jquery' );
     wp_register_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js',array(), "1.64");
     wp_register_script('myscript', get_template_directory_uri().'/js/script.js', array("jquery"), false);
+    //wp_register_script('html5shiv', get_template_directory_uri().'/js/html5shiv.js', array("jquery"), false);
+
+    //run html5shiv if the browser is less than IE9
+    //if(preg_match('/(?i)msie (2|3|4|5|6|7|8)/',$_SERVER['HTTP_USER_AGENT'])) wp_enqueue_script('html5shiv');
 
     wp_enqueue_script('jquery');
     wp_enqueue_script('myscript');
@@ -26,10 +30,17 @@ function load_my_scripts() {
 /*
   Load all the styles in this order.
 */
-add_action('init', 'load_my_styles');
-function load_my_styles() {
+add_action('init', 'themename_load_my_styles');
+function themename_load_my_styles() {
   if (!is_admin()) {
-    //enque and register styles here 
+    //wp_register_style("bootstrap", get_template_directory_uri()."/bootstrap/css/bootstrap-responsive.css");
+    //wp_register_style("bootstrap-responsive", get_template_directory_uri()."/bootstrap/css/bootstrap.css",array("bootstrap"));
+    //wp_register_style("style", get_template_directory_uri()."/style.css", array("bootstrap","bootstrap-responsive"));
+    wp_register_style("style", get_template_directory_uri()."/style.css");
+
+    //wp_enqueue_style('bootstrap');
+    //wp_enqueue_style('bootstrap-responsive');
+    wp_enqueue_style('style');
   }
 }
 
@@ -39,10 +50,10 @@ function load_my_styles() {
 add_action('admin_menu', 'themename_create_menu');
 function themename_create_menu() {
   add_menu_page('Theme Settings', 'Theme Settings', 'administrator', __FILE__, 'themename_settings_page');
-  add_action( 'admin_init', 'register_themename_settings' );
+  add_action( 'admin_init', 'themename_register_settings' );
 }
 
-function register_themename_settings() {
+function themename_register_settings() {
   register_setting( 'themename-settings-group', 'themename_option_1' );
   register_setting( 'themename-settings-group', 'themename_option_2' );
   register_setting( 'themename-settings-group', 'themename_option_3' );
@@ -179,8 +190,8 @@ function g_plupload_action() {
 /**
  * Remove default wordpress dashboard wigets except a few
  */
-add_action('wp_dashboard_setup', 'remove_dashboard_widgets' );
-function remove_dashboard_widgets() {
+add_action('wp_dashboard_setup', 'themename_remove_dashboard_widgets' );
+function themename_remove_dashboard_widgets() {
   global $wp_meta_boxes;
 
   $wp_meta_boxes['dashboard']['normal']['core']['dashboard_primary'] = $wp_meta_boxes['dashboard']['side']['core']['dashboard_primary'];
@@ -198,17 +209,17 @@ function remove_dashboard_widgets() {
 /**
  * Rename admin menus
  */
-add_filter( 'gettext', 'rename_admin_menus' );
-add_filter( 'ngettext', 'rename_admin_menus' );
-function rename_admin_menus( $translated ) {  
+add_filter( 'gettext', 'themename_rename_admin_menus' );
+add_filter( 'ngettext', 'themename_rename_admin_menus' );
+function themename_rename_admin_menus( $translated ) {  
     $translated = str_replace( 'Settings', 'WP Settings', $translated );
     return $translated;
 }
 /*
 Remove admin menu pages and redesignate them
 */
-add_action( 'admin_menu', 'ark_update_menu_pages' );
-function ark_update_menu_pages() {
+add_action( 'admin_menu', 'themename_update_menu_pages' );
+function themename_update_menu_pages() {
   remove_menu_page('link-manager.php');
   remove_menu_page('edit-comments.php');	
   remove_menu_page('plugins.php');	
@@ -228,8 +239,8 @@ function ark_update_menu_pages() {
 /*
 Remove admin pages from wordpress admin bar
 */
-add_action( 'wp_before_admin_bar_render', 'admin_bar_render' );
-function admin_bar_render() {
+add_action( 'wp_before_admin_bar_render', 'themename_clean_admin_bar' );
+function themename_clean_admin_bar() {
   global $wp_admin_bar;
   $wp_admin_bar->remove_menu('comments');
   $wp_admin_bar->remove_menu('new-content');

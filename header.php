@@ -2,7 +2,6 @@
 <html>
 <head>
   <title><?php wp_title( '|', true, 'right' ); bloginfo( 'name' ); ?></title>
-  <link rel="stylesheet" type="text/css" href="<?php bloginfo('template_directory'); ?>/style.css" />
   <!-- All scripts are called in functions.php -->
   <?php wp_head(); ?>
 </head>
