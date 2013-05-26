@@ -258,6 +258,7 @@ function themename_clean_admin_bar() {
   global $wp_admin_bar;
   $wp_admin_bar->remove_menu('comments');
   $wp_admin_bar->remove_menu('new-content');
+  $wp_admin_bar->remove_menu('themes');
 }
 
 /**
