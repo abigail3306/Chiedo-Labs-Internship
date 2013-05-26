@@ -161,7 +161,7 @@ function themename_settings_page() {
   ?>
     <style>
       .plupload-form-style img { max-width: 400px; }
-      label { width: 200px; float: left; display: block; font-weight: bold; }
+      label { width: 200px; float: left; display: block; }
       form div, .plupload-form-style div { margin-top: 10px; }
       .textarealabel { float: none; }
     </style>
