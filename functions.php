@@ -223,12 +223,13 @@ function themename_remove_dashboard_widgets() {
 /**
  * Rename admin menus
  */
-add_filter( 'gettext', 'themename_rename_admin_menus' );
-add_filter( 'ngettext', 'themename_rename_admin_menus' );
+//add_filter( 'gettext', 'themename_rename_admin_menus' );
+//add_filter( 'ngettext', 'themename_rename_admin_menus' );
 function themename_rename_admin_menus( $translated ) {  
     $translated = str_replace( 'Settings', 'WP Settings', $translated );
     return $translated;
 }
+
 /*
 Remove admin menu pages and redesignate them
 */
