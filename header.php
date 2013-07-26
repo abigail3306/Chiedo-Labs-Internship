@@ -12,7 +12,6 @@
 <!--[if IE 7]><div class="ie7"><![endif]-->
 <!--[if IE 8]><div class="ie8"><![endif]-->
 <!--[if IE 9]><div class="ie9"><![endif]-->
-<!--[if IE 10]><div class="ie10"><![endif]-->
 <header>
 <nav class="mainmenu">
   <?php wp_nav_menu( array( 'theme_location' => 'header-menu' ) ); ?>

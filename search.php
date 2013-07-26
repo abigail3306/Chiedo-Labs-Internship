@@ -1,14 +1,12 @@
 <?php
-/**
+/* MAY NOT WORK - NEEDS TO BE VALIDATED
  * The search results page
- *
-* @package p4th0g3n
-*/
+ */
 
 get_header(); ?>
 <?php 
 /* Usable Search Variables */ 
-$the_search = &new WP_Query("s=$s&showposts=-1"); 
+$the_search = WP_Query("s=$s&showposts=-1"); 
 $search_term =  '"' . wp_specialchars($s, 1) . '"'; 
 $numer_of_results = $the_search->post_count; _e(''); 
 wp_reset_query();
