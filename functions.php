@@ -282,4 +282,13 @@ function themename_unregister_default_wp_widgets() {
   unregister_widget('WP_Widget_Tag_Cloud');
 }
 
+/*
+ * Creates a shortcode for the client to make editing their content easier.
+ * Obviously the appropriate css also needs to be generated.
+ */
+function themename_one_third( $atts, $content = null ) {
+  return '<div class="one_third">' . do_shortcode($content) . '</div>';
+}
+add_shortcode('one_third', 'themename_one_third');
+
 ?>
