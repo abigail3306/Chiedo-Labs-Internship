@@ -24,7 +24,7 @@ add_action('init', 'themename_load_my_scripts');
 function themename_load_my_scripts() {
   if (!is_admin()) {
     wp_deregister_script( 'jquery' );
-    wp_register_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js',array(), "1.64");
+    wp_register_script('jquery', '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js',array(), "1.10.2");
     wp_register_script('myscript', get_template_directory_uri().'/js/script.js', array("jquery"), false);
     //wp_register_script('html5shiv', get_template_directory_uri().'/js/html5shiv.js', array("jquery"), false);
 
