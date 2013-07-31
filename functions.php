@@ -286,9 +286,20 @@ function themename_unregister_default_wp_widgets() {
  * Creates a shortcode for the client to make editing their content easier.
  * Obviously the appropriate css also needs to be generated.
  */
+add_shortcode('one_third', 'themename_one_third');
 function themename_one_third( $atts, $content = null ) {
   return '<div class="one_third">' . do_shortcode($content) . '</div>';
 }
-add_shortcode('one_third', 'themename_one_third');
+
+/*
+ * CSS For the admin page
+ */
+add_action('admin_head', 'themename_custom_admin_css');
+function themename_custom_admin_css() {
+?>
+  <style>
+  </style>
+<?php
+}
 
 ?>
