@@ -54,6 +54,19 @@ function themename_load_my_styles() {
 }
 
 /*
+ *
+ *  Adds a filter to append the default stylesheet to the tinymce editor. EXPERIMENTAL
+ *
+ */
+add_filter( 'mce_css', 'tdav_css' );
+if ( ! function_exists('tdav_css') ) {
+  function tdav_css($wp) {
+    $wp .= ',' . get_bloginfo('stylesheet_url');
+  return $wp;
+  }
+}
+
+/*
   Create a theme settings page
 */
 add_action('admin_menu', 'themename_create_menu');
