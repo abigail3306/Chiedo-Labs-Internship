@@ -9,6 +9,11 @@ if ( function_exists('register_sidebar') ) register_sidebar(array(
 ));
 
 /*
+  Image link to none by default
+*/
+update_option('image_default_link_type','none');
+
+/*
   Register wordpress menu so that the custom menu can be used
 */
 add_action( 'init', 'themename_register_my_menus' );
