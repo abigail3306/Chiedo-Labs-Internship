@@ -331,7 +331,7 @@ function themename_add_in($atts, $content = null) {
   $post = get_post($id); 
   $content = $post->post_content;
 
-  echo $content;
+  return $content;
 }
 
 ?>
