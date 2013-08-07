@@ -320,4 +320,18 @@ function themename_custom_admin_css() {
 <?php
 }
 
+/*
+ * Add ins so you can grab post content by the ID
+ */
+add_shortcode("add-in","themename_add_in"); 
+function themename_add_in($atts, $content = null) {
+  extract(shortcode_atts(array(
+    "id" => 0
+  ), $atts));
+  $post = get_post($id); 
+  $content = $post->post_content;
+
+  echo $content;
+}
+
 ?>
