@@ -255,17 +255,17 @@ add_action( 'admin_menu', 'themename_update_menu_pages' );
 function themename_update_menu_pages() {
   remove_menu_page('link-manager.php');
   remove_menu_page('edit-comments.php');	
-  remove_menu_page('plugins.php');	
-  remove_menu_page('themes.php');	
-  remove_menu_page('users.php');	
+  //remove_menu_page('plugins.php');	
+  //remove_menu_page('themes.php');	
+  //remove_menu_page('users.php');	
   //remove_menu_page('tools.php');	
   
-  add_submenu_page('options-general.php','Plugins', 'Plugins', 'administrator', 'plugins.php');
-  add_submenu_page('options-general.php','Themes', 'Themes', 'administrator', 'themes.php');
+  //add_submenu_page('options-general.php','Plugins', 'Plugins', 'administrator', 'plugins.php');
+  //add_submenu_page('options-general.php','Themes', 'Themes', 'administrator', 'themes.php');
   //add_submenu_page('options-general.php','Tools', 'Tools', 'administrator', 'tools.php');
-  add_submenu_page('options-general.php','Users', 'Users', 'administrator', 'users.php');
+  //add_submenu_page('options-general.php','Users', 'Users', 'administrator', 'users.php');
 
-  add_menu_page('Menus','Menus','administrator','nav-menus.php');
+  //add_menu_page('Menus','Menus','administrator','nav-menus.php');
 
 }
 
