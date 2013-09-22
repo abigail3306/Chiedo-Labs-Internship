@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 <div>
-<!-- index page stuff here -->
+<!-- Don't add content here. Purely structural -->
 </div>
 <?php get_footer(); ?>
 
