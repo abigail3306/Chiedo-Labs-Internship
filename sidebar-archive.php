@@ -6,11 +6,10 @@
   /*
   Get the years for all posts in an array in Descending order
   */
-  if ( have_posts() ) : 
-    while ( have_posts() ) : the_post();
+  $yearloop = new WP_Query("post_type=post");
+  while ( $yearloop->have_posts() ) : $yearloop->the_post();
       $years[] = get_the_date('Y');
-    endwhile; 
-  endif;
+  endwhile;
 
   $years = array_unique($years);
   sort($years);
@@ -40,11 +39,10 @@
                 /*
                 Get the months for all posts in an array in the given year
                 */
-                $query = new WP_Query("year=$year");
-                if ( $query->have_posts() ) : while ( have_posts() ) : the_post();
-                  $months[] = get_the_date('n');
-                endwhile; endif;
-
+                $loop = new WP_Query("year=$year");
+                while ( $loop->have_posts() ) : $loop->the_post();
+                $months[] = get_the_date('n');
+                endwhile;
                 $months = array_unique($months);
               ?>
               <?php foreach($months as $month) :?>
