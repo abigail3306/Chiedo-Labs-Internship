@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" /> 
   <title><?php wp_title( '|', true, 'right' ); bloginfo( 'name' ); ?></title>
   <!-- All scripts are called in functions.php -->
   <?php wp_head(); ?>
