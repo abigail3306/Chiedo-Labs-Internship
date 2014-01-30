@@ -4,14 +4,19 @@
   can be called it theme with dynamic_sidebar( 'name here' );
   see http://codex.wordpress.org/Widgetizing_Themes for dynamic info
 */
-if ( function_exists('register_sidebar') ) register_sidebar(array(
-  'name' => "Sidebar name"
-));
+// if ( function_exists('register_sidebar') ) register_sidebar(array(
+  // 'name' => "Sidebar name"
+// ));
 
 /*
   Image link to none by default
 */
 update_option('image_default_link_type','none');
+
+/*
+ * Add thumbnail support
+ */
+add_theme_support( 'post-thumbnails' );
 
 /*
   Register wordpress menu so that the custom menu can be used
@@ -31,10 +36,10 @@ function themename_load_my_scripts() {
     wp_deregister_script( 'jquery' );
     wp_register_script('jquery', '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js',array(), "1.10.2");
     wp_register_script('myscript', get_template_directory_uri().'/js/script.js', array("jquery"), false);
-    //wp_register_script('html5shiv', get_template_directory_uri().'/js/html5shiv.js', array("jquery"), false);
+    wp_register_script('html5shiv', get_template_directory_uri().'/js/html5shiv.js', array("jquery"), false);
 
     //run html5shiv if the browser is less than IE9
-    //if(preg_match('/(?i)msie (2|3|4|5|6|7|8)/',$_SERVER['HTTP_USER_AGENT'])) wp_enqueue_script('html5shiv');
+    if(preg_match('/(?i)msie (2|3|4|5|6|7|8)/',$_SERVER['HTTP_USER_AGENT'])) wp_enqueue_script('html5shiv');
 
     wp_enqueue_script('jquery');
     wp_enqueue_script('myscript');
@@ -74,17 +79,19 @@ if ( ! function_exists('tdav_css') ) {
 /*
   Create a theme settings page
 */
-add_action('admin_menu', 'themename_create_menu');
-function themename_create_menu() {
-  add_menu_page('Theme Settings', 'Theme Settings', 'administrator', __FILE__, 'themename_settings_page');
-  add_action( 'admin_init', 'themename_register_settings' );
-}
-
-function themename_register_settings() {
-  register_setting( 'themename-settings-group', 'themename_option_1' );
-  register_setting( 'themename-settings-group', 'themename_option_2' );
-  register_setting( 'themename-settings-group', 'themename_option_3' );
-}
+/*
+ * add_action('admin_menu', 'themename_create_menu');
+ * function themename_create_menu() {
+ *   add_menu_page('Theme Settings', 'Theme Settings', 'administrator', __FILE__, 'themename_settings_page');
+ *   add_action( 'admin_init', 'themename_register_settings' );
+ * }
+ * 
+ * function themename_register_settings() {
+ *   register_setting( 'themename-settings-group', 'themename_option_1' );
+ *   register_setting( 'themename-settings-group', 'themename_option_2' );
+ *   register_setting( 'themename-settings-group', 'themename_option_3' );
+ * }
+ */
 
 /*
 IMAGE UPLOAD
@@ -304,10 +311,12 @@ function themename_unregister_default_wp_widgets() {
  * Creates a shortcode for the client to make editing their content easier.
  * Obviously the appropriate css also needs to be generated.
  */
-add_shortcode('one_third', 'themename_one_third');
-function themename_one_third( $atts, $content = null ) {
-  return '<div class="one_third">' . do_shortcode($content) . '</div>';
-}
+/*
+ * add_shortcode('one_third', 'themename_one_third');
+ * function themename_one_third( $atts, $content = null ) {
+ *   return '<div class="one_third">' . do_shortcode($content) . '</div>';
+ * }
+ */
 
 /*
  * CSS For the admin page
@@ -323,15 +332,17 @@ function themename_custom_admin_css() {
 /*
  * Add ins so you can grab post content by the ID
  */
-add_shortcode("add-in","themename_add_in"); 
-function themename_add_in($atts, $content = null) {
-  extract(shortcode_atts(array(
-    "id" => 0
-  ), $atts));
-  $post = get_post($id); 
-  $content = $post->post_content;
-
-  return $content;
-}
+/*
+ * add_shortcode("add-in","themename_add_in"); 
+ * function themename_add_in($atts, $content = null) {
+ *   extract(shortcode_atts(array(
+ *     "id" => 0
+ *   ), $atts));
+ *   $post = get_post($id); 
+ *   $content = $post->post_content;
+ * 
+ *   return $content;
+ * }
+ */
 
 ?>
