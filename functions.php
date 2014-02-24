@@ -187,6 +187,14 @@ function themename_custom_admin_css() {
 }
 
 /*
+ * Hide WordPress Version meta tag
+ */
+add_filter('the_generator', 'wpstarter_remove_version');
+function wpstarter_remove_version() {
+  return '';
+}
+
+/*
  * Add ins so you can grab post content by the ID
  */
 /*
