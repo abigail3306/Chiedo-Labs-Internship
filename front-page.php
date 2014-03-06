@@ -7,7 +7,6 @@
   <!--READ ME. DO NOT DELETE UNTIL YOU IMPLEMENT.-->
 <h1>For security purposes, you need to create the following two files.</h1>
   wp-content/uploads/.htaccess
-  wp-includes/.htaccess
 
   The file will have the following contents in bold (obviously do not copy the bold tags).
   <b>
