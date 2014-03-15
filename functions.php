@@ -195,6 +195,19 @@ function wpstarter_remove_version() {
 }
 
 /*
+ * Adds weekly cron job
+ */
+add_filter( 'cron_schedules', 'cron_add_weekly' );
+function cron_add_weekly( $schedules ) {
+  // Adds once weekly to the existing schedules.
+  $schedules['weekly'] = array(
+    'interval' => 604800,
+    'display' => __( 'Once Weekly' )
+  );
+  return $schedules;
+}
+
+/*
  * Add ins so you can grab post content by the ID
  */
 /*
