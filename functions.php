@@ -223,4 +223,26 @@ function cron_add_weekly( $schedules ) {
  * }
  */
 
+/*
+ * Removes the autop for the UNNAMED custom post type
+ */
+/*
+ * add_filter('the_content','prefix_custom_formatting');
+ * function prefix_custom_formatting($content){
+ *   if(get_post_type()=='UNNAMED') return $content;
+ *   else return wpautop($content);
+ * }
+ */
+
+/*
+ * Removes the visual editor for the UNNAMED custom post type
+ */
+/*
+ * add_filter( 'user_can_richedit', 'disable_for_UNNAMED' );
+ * function disable_for_dng( $default ) {
+ *     global $post;
+ *     if(get_post_type($post) == "UNNAMED") return false;
+ *     return $default;
+ * }
+ */
 ?>
