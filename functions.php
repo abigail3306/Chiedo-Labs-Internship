@@ -68,7 +68,7 @@ function themename_load_my_styles() {
  *  Adds a filter to append the default stylesheet to the tinymce editor. EXPERIMENTAL
  *
  */
-add_filter( 'mce_css', 'tdav_css' );
+//add_filter( 'mce_css', 'tdav_css' );
 if ( ! function_exists('tdav_css') ) {
   function tdav_css($wp) {
     $wp .= ',' . get_bloginfo('stylesheet_url');
