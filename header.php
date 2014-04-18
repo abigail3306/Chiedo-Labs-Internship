@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html>
+<!--[if IE 7]><html class="ie ie7" <?php language_attributes(); ?>><![endif]-->
+<!--[if IE 8]><html class="ie ie8" <?php language_attributes(); ?>><![endif]-->
+<!--[if IE 9]><html class="ie ie9" <?php language_attributes(); ?>><![endif]-->
+<!--[if gt IE 9]><!--><html <?php language_attributes(); ?>><!--<![endif]-->
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta charset="utf-8" />
@@ -8,13 +11,7 @@
   <!-- All scripts are called in functions.php -->
   <?php wp_head(); ?>
 </head>
-<body>
-
-
-
-<!--[if IE 7]><div class="ie7"><![endif]-->
-<!--[if IE 8]><div class="ie8"><![endif]-->
-<!--[if IE 9]><div class="ie9"><![endif]-->
+<body <?php body_class(); ?>>
 <header>
 <nav class="mainmenu">
   <?php wp_nav_menu( array( 'theme_location' => 'header-menu' ) ); ?>
