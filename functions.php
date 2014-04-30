@@ -187,6 +187,33 @@ function themename_custom_admin_css() {
 }
 
 /*
+ * JS For the admin page - EXPERIMENTAL
+ */
+add_action('admin_head', 'themename_custom_admin_js');
+function themename_custom_admin_js() {
+  global $parent_file;
+  
+  // The following removes and defoults to page-builder on the edit and add new 
+  // post screens when it is set up and installed
+  if ( isset( $_GET['action'] ) && $_GET['action'] == 'edit' && isset( $_GET['post'] ) 
+       || $parent_file = "post-new.php") {
+  ?>
+  <script>
+    jQuery(document).ready(function() {
+      if(jQuery("#content-panels").length > 0) {
+        jQuery("#content-panels").click();
+        jQuery(".wp-editor-area").text("");
+        jQuery(".wp-editor-tabs").remove();
+        jQuery("#wp-content-media-buttons").remove();
+        jQuery("#wsp-content-media-buttons").remove();
+      }
+    });
+  </script>
+  <?php 
+  }
+}
+
+/*
  * Hide WordPress Version meta tag
  */
 add_filter('the_generator', 'wpstarter_remove_version');
