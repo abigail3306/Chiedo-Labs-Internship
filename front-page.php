@@ -11,6 +11,7 @@
     -  If you notice any weird behavior, search functions.php for anything with the words EXPERIMENTAL and try removing.
     -->
   <!-- don't forget to add cheatsteet -->
+  <!-- EXPERIMENTAL - you can now try using more more html5. --> 
   <!-- You can replace the following with home page content -->
   <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
   <?php the_content(); ?>
