@@ -35,13 +35,19 @@ function themename_load_my_scripts() {
   if (!is_admin()) {
     wp_deregister_script( 'jquery' );
     wp_register_script('jquery', '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js',array(), "1.10.2");
-    wp_register_script('myscript', get_template_directory_uri().'/js/script.js', array("jquery"), false);
-    wp_register_script('html5shiv', get_template_directory_uri().'/js/html5shiv.js', array("jquery"), false);
-
-    //run html5shiv if the browser is less than IE9
-    if(preg_match('/(?i)msie (2|3|4|5|6|7|8)/',$_SERVER['HTTP_USER_AGENT'])) wp_enqueue_script('html5shiv');
+    wp_register_script('modernizr', get_template_directory_uri().
+      '/js/lib/modernizr/modernizr.custom.js', array("jquery"), false);
+    wp_register_script('webshim', get_template_directory_uri().
+      '/js/lib/js-webshim/minified/polyfiller.js', array("jquery","modernizr"), false);
+    wp_register_script('promises', get_template_directory_uri().
+      '/js/lib/promises-polyfill/promise-1.0.0.min.js', array(), false);
+    wp_register_script('myscript', get_template_directory_uri().
+      '/js/script.js', array("jquery","webshim","modernizr","promises"), false);
 
     wp_enqueue_script('jquery');
+    wp_enqueue_script('modernizr'); // EXPERIMENTAL - see cheatsheet/index.html
+    wp_enqueue_script('webshim'); // EXPERIMENTAL - see cheatsheet/index.html
+    wp_enqueue_script('promises'); // EXPERIMENTAL - see cheatsheet/index.html
     wp_enqueue_script('myscript');
   }
 }

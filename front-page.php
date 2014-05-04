@@ -10,9 +10,11 @@
     -  We will now be using the page builder for our theme so incorporate this as you develop for all pages. It will make    -    things easier for our clients.
     -  If you notice any weird behavior, search functions.php for anything with the words EXPERIMENTAL and try removing.
     -->
+  <!-- don't forget to add cheatsteet -->
   <!-- You can replace the following with home page content -->
   <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
   <?php the_content(); ?>
+  <input type="date" />
 </div>
 <?php endwhile;?>
 <?php get_footer(); ?>
