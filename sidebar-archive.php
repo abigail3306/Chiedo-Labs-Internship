@@ -33,7 +33,7 @@
     <ul>
       <?php foreach($years as $year) : ?>
         <?php if($year == date('Y')) : ?>
-          <li><div class="year"><?php echo $year; ?></div>
+          <li><div class="year"><a href="<?php echo get_year_link($year); ?>"><?php echo $year; ?></a></div>
             <ul>
               <?php
                 /*

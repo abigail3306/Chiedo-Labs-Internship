@@ -2,7 +2,7 @@
     <div>
       <?php while ( have_posts() ) : the_post(); ?>
         <div>
-          <?php the_title(); ?>
+          <a href="<?php the_permalink() ?>"><?php the_title(); ?></a>
           <?php the_excerpt(); ?>
         </div>
       <?php endwhile;?>
