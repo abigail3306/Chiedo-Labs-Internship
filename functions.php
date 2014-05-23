@@ -41,14 +41,14 @@ function themename_load_my_scripts() {
       '/js/lib/js-webshim/minified/polyfiller.js', array("jquery","modernizr"), false);
     wp_register_script('promises', get_template_directory_uri().
       '/js/lib/promises-polyfill/promise-1.0.0.min.js', array(), false);
-    wp_register_script('myscript', get_template_directory_uri().
-      '/js/script.js', array("jquery","webshim","modernizr","promises"), false);
+    wp_register_script('footerscript', get_template_directory_uri().
+      '/js/footer.js', array("jquery","webshim","modernizr","promises"), false);
 
     wp_enqueue_script('jquery');
     wp_enqueue_script('modernizr'); // EXPERIMENTAL - see cheatsheet/index.html
     wp_enqueue_script('webshim'); // EXPERIMENTAL - see cheatsheet/index.html
     wp_enqueue_script('promises'); // EXPERIMENTAL - see cheatsheet/index.html
-    wp_enqueue_script('myscript');
+    wp_enqueue_script('footerscript');
   }
 }
 
