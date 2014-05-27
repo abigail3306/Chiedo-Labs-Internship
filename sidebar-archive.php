@@ -6,7 +6,7 @@
   /*
   Get the years for all posts in an array in Descending order
   */
-  $yearloop = new WP_Query("post_type=post");
+  $yearloop = new WP_Query("post_type=post&posts_per_page=-1");
   while ( $yearloop->have_posts() ) : $yearloop->the_post();
       $years[] = get_the_date('Y');
   endwhile;

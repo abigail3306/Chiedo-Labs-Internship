@@ -7,7 +7,7 @@ Template Name: Blog
 $uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
 $blog_page_url = 'http://' . $_SERVER['HTTP_HOST'].$uri_parts[0];
 $posts_per_page = 10;
-$page_no = $_GET['page-no'];
+if(!empty($_GET['page-no'])) $page_no = $_GET['page-no'];
 $total_posts = wp_count_posts()->publish;
 $last_page_no = ceil(($total_posts/$posts_per_page)) - 1;
 if(empty($page_no)) $page_no = 1;
