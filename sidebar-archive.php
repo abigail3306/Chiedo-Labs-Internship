@@ -22,7 +22,7 @@
       <?php foreach($categories as $category) : ?>
         <li class="category">
           <?php if($category->name != "Uncategorized") : ?>
-            <a class="category-sorter" name="<?php echo $category->name; ?>"><?php echo $category->name; ?></a> 
+            <a href="<?php echo get_category_link($category->term_id) ?>" class="category-item" name="<?php echo $category->name; ?>"><?php echo $category->name; ?></a> 
           <?php endif; ?>
         </li>
       <?php endforeach; ?>
