@@ -1,21 +1,40 @@
+<?php
+/*
+Template Name: Front-page
+*/
+?>
 <?php get_header(); ?>
-<?php while ( have_posts() ) : the_post(); ?>
-<div>
-  <!-- README: 
-    -  Download and install the following plugins from wp-starter-plugins
-    -  - siteorigin-panels (after setting up go tho settings -> Page Builder and uncheck copy content to post content)
-    -  - black-studio-tinymce-widget 
-    -  - all-in-one-seo-pack
-    -  - when PHP is needed in these areas, this is when you should write a shortcode which is easy
-    -  We will now be using the page builder for our theme so incorporate this as you develop for all pages. It will make    -    things easier for our clients.
-    -  If you notice any weird behavior, search functions.php for anything with the words EXPERIMENTAL and try removing.
-    -->
-  <!-- don't forget to add cheatsteet -->
-  <!-- EXPERIMENTAL - you can now try using more more html5. --> 
-  <!-- You can replace the following with home page content -->
-  <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-  <?php the_content(); ?>
-  <input type="date" />
+<div id="home" class="home c-sec">
+	<div id="main-body" class="main-body">
+		<div class="padding">
+			<!--box 1 here -->
+			<div class="box-1 top-enter">
+			<div class="padding">
+				<h1 class="title">
+				Chiedo Labs Creates Websites And Web-Based Solutions.
+				</h1>
+				<div class="sub">
+				We specialize in WordPress, Ruby on Rails, Django and SEO.  Whether you are a small company or a large corporation, we have a solution for you.	</div>
+
+			</div>
+			<!--box 2 here -->
+			</div>
+		
+			<div class="box-2 box">
+			<div class="padding">
+				<div class="box-4">
+					<a class="gallery-img" href="#"><img src="<?php echo get_template_directory_uri() ?>/images/twoconnect1.jpg"/></a>
+				</div>				
+	
+
+
+
+			
+			</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
 </div>
-<?php endwhile;?>
 <?php get_footer(); ?>
+
